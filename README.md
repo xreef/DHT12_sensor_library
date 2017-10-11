@@ -27,18 +27,23 @@ With examples, there are the connection diagram, it's important to use correct p
 
 Thanks to Bobadas, dplasa and adafruit, to share the code in github (where I take some code and ideas).
 
-DHT12 PIN
+###DHT12 PIN
+
 ![DHT12 Pin](https://github.com/xreef/DHT12_sensor_library/blob/master/resources/DHT12%20pinout.jpg) 
 
-DHT12 connection schema
+###DHT12 connection schema
 ArduinoUNO i2c
+
 ![ArduinoUNO i2c](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/ArduinoI2C/ArduinoI2CDHT12.png)
 
 ArduinoUNO oneWire
+
 ![ArduinoUNO oneWire](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/ArduinoOneWire/ArduinoOneWireDHT12.png)
 
 esp8266 (D1Mini) i2c
+
 ![esp8266 (D1Mini) i2c](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/esp8266I2C/esp8266I2CDHT12.png)
 
 esp8266 (D1Mini) oneWire
+
 ![esp8266 (D1Mini) oneWire](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/esp8266OneWire/esp8266OneWireDHT12.png)
