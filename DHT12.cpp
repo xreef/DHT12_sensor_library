@@ -9,10 +9,7 @@
 
 // Default is i2c on default pin with default DHT12 adress
 DHT12::DHT12(void) {
-	#ifdef __AVR
-		_bit = digitalPinToBitMask(_pin);
-		_port = digitalPinToPort(_pin);
-	#endif
+
 }
 
 DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {

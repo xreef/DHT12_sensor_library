@@ -90,7 +90,7 @@ private:
 #ifdef __AVR
 	// Use direct GPIO access on an 8-bit AVR so keep track of the port and bitmask
 	// for the digital pin connected to the DHT.  Other platforms will use digitalRead.
-	uint8_t _bit, _port;
+	uint8_t _bit = 0, _port = 0;
 #endif
 	uint32_t _maxcycles = 0;
 
