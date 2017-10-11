@@ -28,6 +28,6 @@ With examples, there are the connection diagram, it's important to use correct p
 Thanks to Bobadas, dplasa and adafruit, to share the code in github (where I take some code and ideas).
 
 DHT12 PIN
-![DHT12 Pin](http://lmsotfy.com/so.png)
+![DHT12 Pin](http://lmsotfy.com/so.png) 
 
 DHT12 connection schema
