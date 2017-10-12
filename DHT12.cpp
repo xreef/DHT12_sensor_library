@@ -80,7 +80,7 @@ DHT12::ReadStatus DHT12::readStatus(bool force) {
 	// Check if sensor was read less than two seconds ago and return early
 	// to use last reading.
 	uint32_t currenttime = millis();
-	if (!force && ((currenttime - _lastreadtime) < 2000)) {
+	if (!force && ((currenttime - _lastreadtime) < MIN_ELAPSED_TIME)) {
 		return _lastresult; // return last correct measurement
 	}
 	_lastreadtime = currenttime;
@@ -120,12 +120,12 @@ DHT12::ReadStatus DHT12::readStatus(bool force) {
 			// for ~80 microseconds again.
 			if (expectPulse(LOW) == 0) {
 				DEBUG_PRINTLN(F("Timeout waiting for start signal low pulse."));
-				_lastresult = ERROR_TIMEOUT;
+				_lastresult = ERROR_TIMEOUT_LOW;
 				return _lastresult;
 			}
 			if (expectPulse(HIGH) == 0) {
 				DEBUG_PRINTLN(F("Timeout waiting for start signal high pulse."));
-				_lastresult = ERROR_TIMEOUT;
+				_lastresult = ERROR_TIMEOUT_HIGH;
 				return _lastresult;
 			}
 
@@ -233,6 +233,14 @@ bool DHT12::read(bool force) {
 		break;
 	case DHT12::ERROR_TIMEOUT:
 		DEBUG_PRINTLN(F("Timeout error"))
+		;
+		break;
+	case DHT12::ERROR_TIMEOUT_HIGH:
+		DEBUG_PRINTLN(F("Timeout error high"))
+		;
+		break;
+	case DHT12::ERROR_TIMEOUT_LOW:
+		DEBUG_PRINTLN(F("Timeout error low"))
 		;
 		break;
 	case DHT12::ERROR_CONNECT:
