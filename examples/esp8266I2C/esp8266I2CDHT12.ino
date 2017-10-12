@@ -3,24 +3,21 @@
 
 #include <DHT12.h>
 
-// Set dht12 pin to 5 and specify that is oneWire comunication (not default i2c)
+// Set dht12 i2c comunication on default Wire pin
 DHT12 dht12;
 
 void setup()
 {
 	Serial.begin(112560);
-
 	// Start sensor
 	dht12.begin();
 }
 int timeSinceLastRead = 0;
 
-// The loop function is called in an endless loop
 void loop()
 {
 	// Report every 2 seconds.
 	if(timeSinceLastRead > 2000) {
-	// Reading temperature or humidity takes about 250 milliseconds!
 		// Read temperature as Celsius (the default)
 		float t12 = dht12.readTemperature();
 		// Read temperature as Fahrenheit (isFahrenheit = true)

@@ -3,6 +3,7 @@
 
 #include <DHT12.h>
 
+// Set dht12 pin to 5 and specify that is oneWire comunication (not default i2c)
 DHT12 dht12(D5, true);
 
 //The setup function is called once at startup of the sketch
@@ -14,12 +15,10 @@ void setup()
 }
 int timeSinceLastRead = 0;
 
-// The loop function is called in an endless loop
 void loop()
 {
 	// Report every 2 seconds.
 	if(timeSinceLastRead > 2000) {
-	// Reading temperature or humidity takes about 250 milliseconds!
 		// Read temperature as Celsius (the default)
 		float t12 = dht12.readTemperature();
 		// Read temperature as Fahrenheit (isFahrenheit = true)
@@ -29,7 +28,6 @@ void loop()
 
 		bool dht12Read = true;
 		// Check if any reads failed and exit early (to try again).
-
 		if (isnan(h12) || isnan(t12) || isnan(f12)) {
 		  Serial.println("Failed to read from DHT12 sensor!");
 
@@ -65,11 +63,8 @@ void loop()
 			Serial.print(" *C ");
 			Serial.print(dpf12);
 			Serial.println(" *F");
-
-
 		}
 		timeSinceLastRead = 0;
-
 	}
 	delay(100);
 	timeSinceLastRead += 100;

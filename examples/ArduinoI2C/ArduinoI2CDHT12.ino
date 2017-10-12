@@ -3,19 +3,17 @@
 
 #include <DHT12.h>
 
-// Set dht12 pin to 5 and specify that is oneWire comunication (not default i2c)
+// Set dht12 i2c comunication on default Wire pin
 DHT12 dht12;
 
 void setup()
 {
 	Serial.begin(112560);
-
-	// Start sensor
+	// Start sensor handshake
 	dht12.begin();
 }
 int timeSinceLastRead = 0;
 
-// The loop function is called in an endless loop
 void loop()
 {
 	// Report every 2 seconds.
@@ -30,7 +28,6 @@ void loop()
 
 		bool dht12Read = true;
 		// Check if any reads failed and exit early (to try again).
-
 		if (isnan(h12) || isnan(t12) || isnan(f12)) {
 		  Serial.println("Failed to read from DHT12 sensor!");
 
@@ -66,11 +63,8 @@ void loop()
 			Serial.print(" *C ");
 			Serial.print(dpf12);
 			Serial.println(" *F");
-
-
 		}
 		timeSinceLastRead = 0;
-
 	}
 	delay(100);
 	timeSinceLastRead += 100;

@@ -9,13 +9,11 @@ DHT12 dht12(5, true);
 void setup()
 {
 	Serial.begin(112560);
-
 	// Start sensor
 	dht12.begin();
 }
 int timeSinceLastRead = 0;
 
-// The loop function is called in an endless loop
 void loop()
 {
 	// Report every 2 seconds.
@@ -30,7 +28,6 @@ void loop()
 
 		bool dht12Read = true;
 		// Check if any reads failed and exit early (to try again).
-
 		if (isnan(h12) || isnan(t12) || isnan(f12)) {
 		  Serial.println("Failed to read from DHT12 sensor!");
 
