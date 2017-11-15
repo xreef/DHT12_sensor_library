@@ -1,4 +1,6 @@
-This is an Arduino and esp8266 library for the DHT12 series of very low cost temperature/humidity sensors (less than 1$).
+This is an Arduino and esp8266 library for the DHT12 series of very low cost temperature/humidity sensors (less than 1$) that work with i2c or one wire connection.
+
+AI read that sometime seems that need calibration, but I have tree of this and get value very similar to DHT22. If you have calibration this problem, open issue on github and I add implementation.
 
 Tutorial: 
 
@@ -10,18 +12,17 @@ This libray try to emulate the behaivor of standard *DHT library sensors* (and c
 
 The method is the same of *DHT library sensor*, with some adding like *dew point* function.
 
-To use with wire the constructor is:
+To use with i2c (default address and default SDA SCL pin) the constructor is:
 ```cpp
 DHT12 dht12;
 ```
-and take the default value for SDA SCL pin. (It's possible to redefine with specified contructor for esp8266 but is not the
-best way).
+and take the default value for SDA SCL pin. (It's possible to redefine with specified contructor for esp8266, needed for ESP-01).
 or
 ```cpp
-DHT12 dht12(uint8_t addressOrPin, false)
+DHT12 dht12(uint8_t addressOrPin)
 ```
 `addressOrPin -> address`
-to change address, boolean value is the selection of oneWire or i2c mode.
+to change address.
 
 To use one wire:
 ```cpp
@@ -139,7 +140,7 @@ Thanks to Bobadas, dplasa and adafruit, to share the code in github (where I tak
 
 ## DHT12 PIN ##
 
-![DHT12 Pin](https://github.com/xreef/DHT12_sensor_library/blob/master/resources/DHT12%20pinout.jpg) 
+![DHT12 Pin](https://github.com/xreef/DHT12_sensor_library/blob/master/resources/DHT12_pinout.png) 
 
 ## DHT12 connection schema ##
 ArduinoUNO i2c
