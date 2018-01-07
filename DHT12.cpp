@@ -348,18 +348,18 @@ float DHT12::readTemperature(bool scale, bool force) {
 		DEBUG_PRINT("READ ---> ");
 		DEBUG_PRINTLN(r);
 		if (r) {
-			Serial.print("BIT 0 -> ");
-			Serial.println(data[0], BIN);
-			Serial.print("BIT 1 -> ");
-			Serial.println(data[1], BIN);
-			Serial.print("BIT 2 -> ");
-			Serial.println(data[2], BIN);
-			Serial.print("BIT 3 -> ");
-			Serial.println(data[3], BIN);
-			Serial.print("BIT 4 -> ");
-			Serial.println(data[4], BIN);
-			Serial.print("BIT 5 -> ");
-			Serial.println(data[5], BIN);
+			DEBUG_PRINT("BIT 0 -> ");
+			DEBUG_PRINTLN(data[0], BIN);
+			DEBUG_PRINT("BIT 1 -> ");
+			DEBUG_PRINTLN(data[1], BIN);
+			DEBUG_PRINT("BIT 2 -> ");
+			DEBUG_PRINTLN(data[2], BIN);
+			DEBUG_PRINT("BIT 3 -> ");
+			DEBUG_PRINTLN(data[3], BIN);
+			DEBUG_PRINT("BIT 4 -> ");
+			DEBUG_PRINTLN(data[4], BIN);
+			DEBUG_PRINT("BIT 5 -> ");
+			DEBUG_PRINTLN(data[5], BIN);
 
 			byte scaleValue = data[3] & B01111111;
 			byte signValue  = data[3] & B10000000;
