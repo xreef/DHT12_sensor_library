@@ -348,9 +348,25 @@ float DHT12::readTemperature(bool scale, bool force) {
 		DEBUG_PRINT("READ ---> ");
 		DEBUG_PRINTLN(r);
 		if (r) {
-			temperature = (data[2] + (float) data[3] / 10); //((data[2] & 0x7F)*256 + data[3]);
-			//    if (data[2] & 0x80)  // negative temperature
-			//        temperature = -temperature;
+			Serial.print("BIT 0 -> ");
+			Serial.println(data[0], BIN);
+			Serial.print("BIT 1 -> ");
+			Serial.println(data[1], BIN);
+			Serial.print("BIT 2 -> ");
+			Serial.println(data[2], BIN);
+			Serial.print("BIT 3 -> ");
+			Serial.println(data[3], BIN);
+			Serial.print("BIT 4 -> ");
+			Serial.println(data[4], BIN);
+			Serial.print("BIT 5 -> ");
+			Serial.println(data[5], BIN);
+
+			byte scaleValue = data[3] & B01111111;
+			byte signValue  = data[3] & B10000000;
+
+			temperature = (data[2] + (float) scaleValue / 10);// ((data[2] & 0x7F)*256 + data[3]);
+			    if (signValue)  // negative temperature
+			        temperature = -temperature;
 
 			if (scale) {
 				temperature = convertCtoF(temperature);
