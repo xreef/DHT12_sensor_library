@@ -279,7 +279,7 @@ float DHT12::convertFtoC(float f) {
 	return (f - 32) * 0.55555;
 }
 
-//boolean isFahrenheit: True == Fahrenheit; False == Celcius
+// boolean isFahrenheit: True == Fahrenheit; False == Celsius
 float DHT12::computeHeatIndex(float temperature, float percentHumidity, bool isFahrenheit) {
 	// Using both Rothfusz and Steadman's equations
 	// http://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
@@ -332,7 +332,7 @@ float DHT12::readHumidity(bool force) {
 	return humidity;
 }
 
-//boolean S == Scale.  True == Fahrenheit; False == Celcius
+// boolean S == Scale.  True == Fahrenheit; False == Celsius
 float DHT12::readTemperature(bool scale, bool force) {
 	float temperature = NAN;
 	if (_isOneWire) {
@@ -382,7 +382,7 @@ float DHT12::readTemperature(bool scale, bool force) {
 // reference (1) : http://wahiduddin.net/calc/density_algorithms.htm
 // reference (2) : http://www.colorado.edu/geography/weather_station/Geog_site/about.htm
 //
-//boolean S == Scale.  True == Fahrenheit; False == Celcius
+// boolean S == Scale.  True == Fahrenheit; False == Celsius
 float DHT12::dewPoint(float temperature, float humidity, bool isFahrenheit) {
 	// sloppy but good approximation for 0 ... +70 °C with max. deviation less than 0.25 °C
 
