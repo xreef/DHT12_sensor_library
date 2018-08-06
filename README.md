@@ -145,16 +145,16 @@ Thanks to Bobadas, dplasa and adafruit, to share the code in github (where I tak
 ## DHT12 connection schema ##
 ArduinoUNO i2c
 
-![ArduinoUNO i2c](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/ArduinoI2C/ArduinoI2CDHT12.png)
+![ArduinoUNO i2c](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/ArduinoI2CDHT12/ArduinoI2CDHT12.png)
 
 ArduinoUNO oneWire
 
-![ArduinoUNO oneWire](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/ArduinoOneWire/ArduinoOneWireDHT12.png)
+![ArduinoUNO oneWire](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/ArduinoOneWireDHT12/ArduinoOneWireDHT12.png)
 
 esp8266 (D1Mini) i2c
 
-![esp8266 (D1Mini) i2c](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/esp8266I2C/esp8266I2CDHT12.png)
+![esp8266 (D1Mini) i2c](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/esp8266I2CDHT12/esp8266I2CDHT12.png)
 
 esp8266 (D1Mini) oneWire
 
-![esp8266 (D1Mini) oneWire](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/esp8266OneWire/esp8266OneWireDHT12.png)
+![esp8266 (D1Mini) oneWire](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/esp8266OneWireDHT12/esp8266OneWireDHT12.png)
