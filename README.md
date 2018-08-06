@@ -147,7 +147,7 @@ ArduinoUNO i2c
 
 ![ArduinoUNO i2c](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/ArduinoI2CDHT12/ArduinoI2CDHT12.png)
 
-ArduinoUNO oneWire
+ArduinoUNO oneWire 
 
 ![ArduinoUNO oneWire](https://github.com/xreef/DHT12_sensor_library/blob/master/examples/ArduinoOneWireDHT12/ArduinoOneWireDHT12.png)
 
