@@ -1,4 +1,4 @@
-Additional information and document update here on my site: [DHT12 Article](http://www.mischianti.org/2019/01/01/dht12-library-en/).
+Additional information and document update here on my site: [DHT12 Article](https://www.mischianti.org/2019/01/01/dht12-library-en/).
 
 This is an Arduino and esp8266 library for the DHT12 series of very low cost temperature/humidity sensors (less than 1$) that work with i2c or one wire connection.
 
