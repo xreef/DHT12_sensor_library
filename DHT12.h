@@ -158,12 +158,12 @@ private:
 
 };
 
-class InterruptLock {
+class InterruptLockDht12 {
 public:
-	InterruptLock() {
+	InterruptLockDht12() {
 		noInterrupts();
 	}
-	~InterruptLock() {
+	~InterruptLockDht12() {
 		interrupts();
 	}
 

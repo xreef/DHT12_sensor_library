@@ -106,7 +106,7 @@ DHT12::ReadStatus DHT12::readStatus(bool force) {
 		  {
 		    // Turn off interrupts temporarily because the next sections are timing critical
 		    // and we don't want any interruptions.
-		    InterruptLock lock;
+			  InterruptLockDht12 lock;
 
 		    // End the start signal by setting data line high for 40 microseconds.
 		    digitalWrite(_pin, HIGH);
@@ -322,7 +322,8 @@ float DHT12::readHumidity(bool force) {
 	if (_isOneWire) {
 		if (DHT12::read(force)) {
 			DEBUG_PRINT(data[0]);
-			humidity = data[0];
+//			humidity = data[0];
+			humidity = (data[0] + (float) data[1] / 10);
 		}
 	} else {
 		if (DHT12::read(force)) {
@@ -337,7 +338,17 @@ float DHT12::readTemperature(bool scale, bool force) {
 	float temperature = NAN;
 	if (_isOneWire) {
 		if (DHT12::read(force)) {
-			temperature = data[2];
+//			temperature = data[2];
+//			if (scale) {
+//				temperature = convertCtoF(temperature);
+//			}
+			byte scaleValue = data[3] & B01111111;
+			byte signValue  = data[3] & B10000000;
+
+			temperature = (data[2] + (float) scaleValue / 10);// ((data[2] & 0x7F)*256 + data[3]);
+			    if (signValue)  // negative temperature
+			        temperature = -temperature;
+
 			if (scale) {
 				temperature = convertCtoF(temperature);
 			}
