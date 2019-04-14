@@ -7,14 +7,15 @@
 #include "DHT12.h"
 #include "Wire.h"
 
-// Default is i2c on default pin with default DHT12 adress
+// Default is i2c on default pin with default DHT12 address
 DHT12::DHT12(void) {
-
+	_wire = NULL;
 }
 
 DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
 	_isOneWire = oneWire;
 	if (oneWire) {
+		_wire = NULL;
 		_pin = addressOrPin;
 		#ifdef __AVR
 			_bit = digitalPinToBitMask(_pin);
@@ -27,6 +28,7 @@ DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
 
 		DEBUG_PRINTLN("PIN MODE");
 	} else {
+		_wire = &Wire;
 		_address = addressOrPin;
 		DEBUG_PRINTLN("I2C MODE");
 	}
@@ -37,17 +39,40 @@ DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
 // slow software emulation of the I2C hardware. The built in I2C hardware has fixed pin assignments.
 #ifndef __AVR
 	DHT12::DHT12(uint8_t sda, uint8_t scl) {
+		_wire = &Wire;
 		_isOneWire = false;
 		_sda = sda;
 		_scl = scl;
 	}
 
 	DHT12::DHT12(uint8_t sda, uint8_t scl, uint8_t address) {
+		_wire = &Wire;
 		_isOneWire = false;
 		_sda = sda;
 		_scl = scl;
 		_address = address;
 	}
+
+	///// changes for second i2c bus
+	DHT12::DHT12(uint8_t address, TwoWire *pWire) {
+		_wire = pWire;
+		_isOneWire = false;
+		/
+		sda = SCA (bus 0)!
+		//_sda = sda;
+		//_scl = scl;
+		*/
+		_address = address;
+	}
+	DHT12::DHT12(uint8_t sda, uint8_t scl, uint8_t address, TwoWire *pWire) {
+		_wire = pWire;
+		_isOneWire = false;
+		_sda = sda;
+		_scl = scl;
+		_address = address;
+	}
+	// changes
+
 #endif
 
 void DHT12::begin() {
@@ -62,12 +87,12 @@ void DHT12::begin() {
 		DEBUG_PRINTLN(_maxcycles, DEC);
 	} else {
 		#ifndef __AVR
-			Wire.begin(_sda, _scl);
+			_wire->begin(_sda, _scl);
 		#else
-//			Default pin for AVR some problem on software emulation
-//			#define SCL_PIN _scl
-// 			#define SDA_PIN _sda
-			Wire.begin();
+			//	Default pin for AVR some problem on software emulation
+			//	#define SCL_PIN _scl
+			// #define SDA_PIN _sda
+			_wire->begin();
 		#endif
 		DEBUG_PRINT("I2C Inizialization: sda, scl: ");
 		DEBUG_PRINT(_sda);
@@ -186,21 +211,21 @@ DHT12::ReadStatus DHT12::readStatus(bool force) {
 
 	} else {
 		DEBUG_PRINT("I2C START READING..");
-		Wire.beginTransmission(_address);
-		Wire.write(0);
-		if (Wire.endTransmission() != 0) {
+		_wire->beginTransmission(_address);
+		_wire->write(0);
+		if (_wire->endTransmission() != 0) {
 			DEBUG_PRINTLN("CONNECTION ERROR!");
 			_lastresult = ERROR_CONNECT;
 			return _lastresult;
 		}
-		Wire.requestFrom(_address, (uint8_t) 5);
+		_wire->requestFrom(_address, (uint8_t) 5);
 		for (uint8_t i = 0; i < 5; ++i) {
-			data[i] = Wire.read();
+			data[i] = _wire->read();
 			DEBUG_PRINTLN(data[i]);
 		}
 
 		delay(1);
-		if (Wire.available() != 0) {
+		if (_wire->available() != 0) {
 			DEBUG_PRINTLN("TIMEOUT ERROR!");
 			_lastresult = ERROR_TIMEOUT;
 			return _lastresult;

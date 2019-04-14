@@ -77,6 +77,11 @@ public:
 	 */
 	DHT12(uint8_t sda, uint8_t scl);
 	DHT12(uint8_t sda, uint8_t scl, uint8_t address);
+
+	///// changes for second i2c bus
+	// for I2C second bus
+	DHT12(uint8_t addr, TwoWire *pWire);
+	DHT12(uint8_t sda, uint8_t scl, uint8_t address, TwoWire *pWire);
 #endif
 	/**
 	 * Start handshake
@@ -146,6 +151,10 @@ private:
 
 	uint8_t _pin = 3;
 #ifdef __AVR
+	///// changes for second i2c bus
+	// for I2C second bus
+	TwoWire *_wire;
+
 	// Use direct GPIO access on an 8-bit AVR so keep track of the port and bitmask
 	// for the digital pin connected to the DHT.  Other platforms will use digitalRead.
 	uint8_t _bit = 0, _port = 0;
