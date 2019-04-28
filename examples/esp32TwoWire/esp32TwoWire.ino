@@ -15,7 +15,6 @@ DHT12 dht12(&I2Ctwo);
 
 void setup()
 {
-	// 400kHz frequency not working with dht12
 	I2Cone.begin(16,17,400000); // SDA pin 16, SCL pin 17, 400kHz frequency
 
 	Serial.begin(112560);
