@@ -53,26 +53,36 @@ DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
 		_address = address;
 	}
 
-	///// changes for second i2c bus
-	DHT12::DHT12(uint8_t address, TwoWire *pWire) {
-		_wire = pWire;
-		_isOneWire = false;
-		/
-		sda = SCA (bus 0)!
-		//_sda = sda;
-		//_scl = scl;
-		*/
-		_address = address;
-	}
-	DHT12::DHT12(uint8_t sda, uint8_t scl, uint8_t address, TwoWire *pWire) {
-		_wire = pWire;
-		_isOneWire = false;
-		_sda = sda;
-		_scl = scl;
-		_address = address;
-	}
-	// changes
+	#ifdef ESP32
 
+		///// changes for second i2c bus
+
+		DHT12::DHT12(TwoWire *pWire) {
+			_wire = pWire;
+			_isOneWire = false;
+		}
+
+		DHT12::DHT12(uint8_t address, TwoWire *pWire) {
+			_wire = pWire;
+			_isOneWire = false;
+
+			_address = address;
+		}
+		DHT12::DHT12(uint8_t sda, uint8_t scl, TwoWire *pWire) {
+			_wire = pWire;
+			_isOneWire = false;
+			_sda = sda;
+			_scl = scl;
+		}
+		DHT12::DHT12(uint8_t sda, uint8_t scl, uint8_t address, TwoWire *pWire) {
+			_wire = pWire;
+			_isOneWire = false;
+			_sda = sda;
+			_scl = scl;
+			_address = address;
+		}
+		// changes
+	#endif
 #endif
 
 void DHT12::begin() {
