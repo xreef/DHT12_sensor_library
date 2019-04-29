@@ -1,9 +1,21 @@
-// Do not remove the include below
+/*
+ * 	DHT12
+ *  Arduino full read on i2c
+ *  by Mischianti Renzo <http://www.mischianti.org>
+ *
+ *  https://www.mischianti.org/2019/01/01/dht12-library-en/
+ *
+ *
+ * DHT12      ----- Arduino
+ * SDA        ----- A4
+ * SCL        ----- A5
+ *
+ */
+
 #include "Arduino.h"
 
 #include <DHT12.h>
 
-// Set dht12 pin to 5 and specify that is oneWire comunication (not default i2c)
 DHT12 dht12;
 
 void setup()

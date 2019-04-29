@@ -1,4 +1,17 @@
-// Do not remove the include below
+/*
+ * 	DHT12
+ *  esp8266 one wire communication example
+ *  by Mischianti Renzo <http://www.mischianti.org>
+ *
+ *  https://www.mischianti.org/2019/01/01/dht12-library-en/
+ *
+ *
+ * DHT12      ----- Esp8266
+ * SDA        ----- D1
+ * SCL        ----- D2
+ *
+ */
+
 #include "Arduino.h"
 
 #include <DHT12.h>

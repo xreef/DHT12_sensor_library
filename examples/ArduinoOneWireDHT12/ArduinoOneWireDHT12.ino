@@ -1,4 +1,17 @@
-// Do not remove the include below
+/*
+ * 	DHT12
+ *  Arduino implicit read on onw wire
+ *  by Mischianti Renzo <http://www.mischianti.org>
+ *
+ *  https://www.mischianti.org/2019/01/01/dht12-library-en/
+ *
+ *
+ * DHT12      ----- Arduino
+ * SDA        ----- A4
+ * SCL        ----- A5
+ *
+ */
+
 #include "Arduino.h"
 
 #include <DHT12.h>

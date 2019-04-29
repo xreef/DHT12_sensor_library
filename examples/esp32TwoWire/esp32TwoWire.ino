@@ -1,3 +1,17 @@
+/*
+ * 	DHT12
+ *  esp32 implicit read on second i2c channel
+ *  by Mischianti Renzo <http://www.mischianti.org>
+ *
+ *  https://www.mischianti.org/2019/01/01/dht12-library-en/
+ *
+ *
+ * DHT12      ----- esp32
+ * SDA        ----- 21
+ * SCL        ----- 22
+ *
+ */
+
 #include "Arduino.h"
 #include "Wire.h"
 #include <DHT12.h>
