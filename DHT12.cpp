@@ -62,19 +62,19 @@ DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
 			_isOneWire = false;
 		}
 
-		DHT12::DHT12(uint8_t address, TwoWire *pWire) {
+		DHT12::DHT12(TwoWire *pWire, uint8_t address) {
 			_wire = pWire;
 			_isOneWire = false;
 
 			_address = address;
 		}
-		DHT12::DHT12(uint8_t sda, uint8_t scl, TwoWire *pWire) {
+		DHT12::DHT12(TwoWire *pWire, uint8_t sda, uint8_t scl) {
 			_wire = pWire;
 			_isOneWire = false;
 			_sda = sda;
 			_scl = scl;
 		}
-		DHT12::DHT12(uint8_t sda, uint8_t scl, uint8_t address, TwoWire *pWire) {
+		DHT12::DHT12(TwoWire *pWire, uint8_t sda, uint8_t scl, uint8_t address) {
 			_wire = pWire;
 			_isOneWire = false;
 			_sda = sda;

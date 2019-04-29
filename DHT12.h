@@ -80,11 +80,10 @@ public:
 
 	#ifdef ESP32
 		///// changes for second i2c bus
-		// for I2C second bus
 		DHT12(TwoWire *pWire);
-		DHT12(uint8_t sda, uint8_t scl, TwoWire *pWire);
-		DHT12(uint8_t addr, TwoWire *pWire);
-		DHT12(uint8_t sda, uint8_t scl, uint8_t address, TwoWire *pWire);
+		DHT12(TwoWire *pWire, uint8_t sda, uint8_t scl);
+		DHT12(TwoWire *pWire, uint8_t addr);
+		DHT12(TwoWire *pWire, uint8_t sda, uint8_t scl, uint8_t address);
 	#endif
 #endif
 	/**
