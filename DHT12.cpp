@@ -9,7 +9,7 @@
 
 // Default is i2c on default pin with default DHT12 address
 DHT12::DHT12(void) {
-	_wire = NULL;
+	_wire = &Wire;
 }
 
 DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
