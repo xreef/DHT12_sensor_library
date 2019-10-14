@@ -1,5 +1,14 @@
 Additional information and document update here on my site: [DHT12 Article](https://www.mischianti.org/2019/01/01/dht12-library-en/).
 
+Here a comparison of the major competitor of the sensor: 
+[Temperature humidity sensors comparison (Specifications) Part 1](https://www.mischianti.org/2019/07/01/temperature-humidity-sensors-comparison-settings-part-1/)
+
+[Temperature humidity sensors comparison (Code configuration) Part 2](https://www.mischianti.org/2019/07/08/temperature-humidity-sensors-comparison-code-configuration-part-2/).
+
+[Temperature humidity sensors comparison (Data) Part 3](https://www.mischianti.org/2019/07/16/temperature-humidity-sensors-comparison-data-part-3/).
+
+![](https://www.mischianti.org/wp-content/uploads/2019/02/BreadBoardArduinoWeather-768x432.jpg)
+
 This is an Arduino and esp8266 library for the DHT12 series of very low cost temperature/humidity sensors (less than 1$) that work with i2c or one wire connection.
 
 AI read that sometime seems that need calibration, but I have tree of this and get value very similar to DHT22. If you have calibration this problem, open issue on github and I add implementation.
