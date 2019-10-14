@@ -38,7 +38,7 @@ DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
 	if (oneWire) {
 		_wire = NULL;
 		_pin = addressOrPin;
-		#ifdef __AVR
+		#if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
 			_bit = digitalPinToBitMask(_pin);
 			_port = digitalPinToPort(_pin);
 		#endif
@@ -58,7 +58,7 @@ DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
 // Is not good idea use other pin for i2c as standard on Arduino you can get lag.
 // The lag happens when you choose "different pins", because you are then using a
 // slow software emulation of the I2C hardware. The built in I2C hardware has fixed pin assignments.
-#ifndef __AVR
+#if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
 	DHT12::DHT12(uint8_t sda, uint8_t scl) {
 		_wire = &Wire;
 		_isOneWire = false;
@@ -117,7 +117,7 @@ void DHT12::begin() {
 		DEBUG_PRINT("Max clock cycles: ");
 		DEBUG_PRINTLN(_maxcycles, DEC);
 	} else {
-		#ifndef __AVR
+		#if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
 			_wire->begin(_sda, _scl);
 		#else
 			//	Default pin for AVR some problem on software emulation
@@ -490,7 +490,7 @@ uint32_t DHT12::expectPulse(bool level) {
 	uint32_t count = 0;
 	// On AVR platforms use direct GPIO port access as it's much faster and better
 	// for catching pulses that are 10's of microseconds in length:
-#ifdef __AVR
+#if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
 	uint8_t portState = level ? _bit : 0;
 	while ((*portInputRegister(_port) & _bit) == portState) {
 		if (count++ >= _maxcycles) {
