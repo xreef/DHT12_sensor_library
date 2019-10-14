@@ -170,8 +170,8 @@ private:
 	;
 	#ifdef STM32F1
 	#ifndef SDA
-	#define SDA PB7
-	#define SCL PB6
+	#define DEFAULT_SDA PB7
+	#define DEFAULT_SCL PB6
 	#endif
 	#endif
 	uint8_t _sda = DEFAULT_SDA
