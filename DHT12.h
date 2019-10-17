@@ -168,7 +168,7 @@ private:
 	uint8_t data[5];
 	uint8_t _address = DEFAULT_DHT12_ADDRESS
 	;
-	#ifdef STM32F1
+	#ifdef __STM32F1__
 	#ifndef SDA
 	#define DEFAULT_SDA PB7
 	#define DEFAULT_SCL PB6
