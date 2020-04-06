@@ -28,6 +28,8 @@
 #include "DHT12.h"
 #include "Wire.h"
 
+#define TIMEOUT -1        /**< timeout on */
+
 // Default is i2c on default pin with default DHT12 address
 DHT12::DHT12(void) {
 	_wire = &Wire;
@@ -38,10 +40,17 @@ DHT12::DHT12(uint8_t addressOrPin, bool oneWire) {
 	if (oneWire) {
 		_wire = NULL;
 		_pin = addressOrPin;
-		#if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
+		#if defined(__AVR) // || ( !defined(__STM32F1__) && !defined(TEENSYDUINO))
 			_bit = digitalPinToBitMask(_pin);
 			_port = digitalPinToPort(_pin);
 		#endif
+
+#ifndef microsecondsToClockCycles
+#define clockCyclesPerMicrosecond() ( 260L ) //260 is Clock Cycle of LinkIt ONE in MHz
+#define clockCyclesToMicroseconds(a) ( (a) / clockCyclesPerMicrosecond() )
+#define microsecondsToClockCycles(a) ( (a) * clockCyclesPerMicrosecond() )
+#endif
+
 		_maxcycles = microsecondsToClockCycles(1000); // 1 millisecond timeout for
 													  // reading pulses from DHT sensor.
 		// Note that count is now ignored as the DHT reading algorithm adjusts itself
@@ -117,7 +126,7 @@ void DHT12::begin() {
 		DEBUG_PRINT("Max clock cycles: ");
 		DEBUG_PRINTLN(_maxcycles, DEC);
 	} else {
-		#if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
+		#if !defined(ARDUINO_ARCH_MBED) && ( !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO))
 			_wire->begin(_sda, _scl);
 		#else
 			//	Default pin for AVR some problem on software emulation
@@ -174,12 +183,12 @@ DHT12::ReadStatus DHT12::readStatus(bool force) {
 
 			// First expect a low signal for ~80 microseconds followed by a high signal
 			// for ~80 microseconds again.
-			if (expectPulse(LOW) == 0) {
+			if (expectPulse(LOW) == TIMEOUT) {
 				DEBUG_PRINTLN(F("Timeout waiting for start signal low pulse."));
 				_lastresult = ERROR_TIMEOUT_LOW;
 				return _lastresult;
 			}
-			if (expectPulse(HIGH) == 0) {
+			if (expectPulse(HIGH) == TIMEOUT) {
 				DEBUG_PRINTLN(F("Timeout waiting for start signal high pulse."));
 				_lastresult = ERROR_TIMEOUT_HIGH;
 				return _lastresult;
@@ -200,19 +209,19 @@ DHT12::ReadStatus DHT12::readStatus(bool force) {
 
 			  // Inspect pulses and determine which ones are 0 (high state cycle count < low
 			  // state cycle count), or 1 (high state cycle count > low state cycle count).
-			  for (int i=0; i<40; ++i) {
-			    uint32_t lowCycles  = cycles[2*i];
-			    uint32_t highCycles = cycles[2*i+1];
-			    if ((lowCycles == 0) || (highCycles == 0)) {
-			      DEBUG_PRINTLN(F("Timeout waiting for pulse."));
+			  for (int i = 0; i < 40; ++i) {
+			    uint32_t lowCycles = cycles[2 * i];
+			    uint32_t highCycles = cycles[2 * i + 1];
+			    if ((lowCycles == TIMEOUT) || (highCycles == TIMEOUT)) {
+			      DEBUG_PRINTLN(F("DHT timeout waiting for pulse."));
 			      _lastresult = ERROR_TIMEOUT;
 			      return _lastresult;
 			    }
-			    data[i/8] <<= 1;
+			    data[i / 8] <<= 1;
 			    // Now compare the low and high cycle times to see if the bit is a 0 or 1.
 			    if (highCycles > lowCycles) {
 			      // High cycles are greater than 50us low cycle count, must be a 1.
-			      data[i/8] |= 1;
+			      data[i / 8] |= 1;
 			    }
 			    // Else high cycles are less than (or equal to, a weird case) the 50us low
 			    // cycle count so this must be a zero.  Nothing needs to be changed in the
@@ -487,24 +496,28 @@ DHT12::ReadStatus DHT12::_checksum() {
 // in the very latest IDE versions):
 //   https://github.com/arduino/Arduino/blob/master/hardware/arduino/avr/cores/arduino/wiring_pulse.c
 uint32_t DHT12::expectPulse(bool level) {
-	uint32_t count = 0;
+	#if (F_CPU > 16000000L)
+	  uint32_t count = 0;
+	#else
+	  uint16_t count = 0; // To work fast enough on slower AVR boards
+	#endif
 	// On AVR platforms use direct GPIO port access as it's much faster and better
 	// for catching pulses that are 10's of microseconds in length:
-#if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
-	uint8_t portState = level ? _bit : 0;
-	while ((*portInputRegister(_port) & _bit) == portState) {
-		if (count++ >= _maxcycles) {
-			return 0; // Exceeded timeout, fail.
-		}
-	}
+#if defined(__AVR) // || ( !defined(__STM32F1__) && !defined(TEENSYDUINO) )
+	  uint8_t portState = level ? _bit : 0;
+	  while ((*portInputRegister(_port) & _bit) == portState) {
+	    if (count++ >= _maxcycles) {
+	      return TIMEOUT; // Exceeded timeout, fail.
+	    }
+	  }
 	// Otherwise fall back to using digitalRead (this seems to be necessary on ESP8266
 	// right now, perhaps bugs in direct port access functions?).
 #else
-	while (digitalRead(_pin) == level) {
-		if (count++ >= _maxcycles) {
-			return 0; // Exceeded timeout, fail.
-		}
-	}
+	  while (digitalRead(_pin) == level) {
+	    if (count++ >= _maxcycles) {
+	      return TIMEOUT; // Exceeded timeout, fail.
+	    }
+	  }
 #endif
 
 	return count;

@@ -36,8 +36,17 @@
 #include "Wire.h"
 
 #define DEFAULT_DHT12_ADDRESS 0x5C;
-#define DEFAULT_SDA SDA;
-#define DEFAULT_SCL SCL;
+
+#ifndef SDA
+	#define DEFAULT_SDA -1
+	#define DEFAULT_SCL -1
+#endif
+
+#ifdef SDA
+	#define DEFAULT_SDA SDA;
+	#define DEFAULT_SCL SCL;
+#endif
+
 
 #define MIN_ELAPSED_TIME 2000
 
@@ -174,6 +183,7 @@ private:
 	#define DEFAULT_SCL PB6
 	#endif
 	#endif
+
 	uint8_t _sda = DEFAULT_SDA
 	;
 	uint8_t _scl = DEFAULT_SCL
@@ -183,7 +193,7 @@ private:
 	ReadStatus _lastresult = NONE;
 
 	uint8_t _pin = 3;
-#if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
+#if defined(__AVR) // && !defined(__STM32F1__) && !defined(TEENSYDUINO)
 	// Use direct GPIO access on an 8-bit AVR so keep track of the port and bitmask
 	// for the digital pin connected to the DHT.  Other platforms will use digitalRead.
 	uint8_t _bit = 0, _port = 0;
@@ -199,10 +209,14 @@ private:
 class InterruptLockDht12 {
 public:
 	InterruptLockDht12() {
-		noInterrupts();
+#if !defined(ARDUINO_ARCH_NRF52)
+    noInterrupts();
+#endif
 	}
 	~InterruptLockDht12() {
-		interrupts();
+#if !defined(ARDUINO_ARCH_NRF52)
+    interrupts();
+#endif
 	}
 
 };
