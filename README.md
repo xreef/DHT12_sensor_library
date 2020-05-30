@@ -1,3 +1,15 @@
+
+<div>
+<a href="https://www.mischianti.org/forum/forum/dht12-complete-library-adafruit-dht-clone-humidity-temperature-sensor-i2c-and-one-wire/"><img
+  src="https://github.com/xreef/LoRa_E32_Series_Library/raw/master/resources/buttonSupportForumEnglish.png" alt="Support forum DHT12 English"
+   align="right"></a>
+</div>
+<div>
+<a href="https://www.mischianti.org/forum/forum/libreria-completa-per-il-sensore-di-temperatura-ed-umidita-dht12-libreria-clone-delladafruit-dht-i2c-e-one-wire/"><img
+  src="https://github.com/xreef/LoRa_E32_Series_Library/raw/master/resources/buttonSupportForumItaliano.png" alt="Forum supporto DHT12 italiano"
+  align="right"></a>
+</div>
+
 Additional information and document update here on my site: [DHT12 Article](https://www.mischianti.org/2019/01/01/dht12-library-en/).
 
 Here a comparison of the major competitor of the sensor: 
