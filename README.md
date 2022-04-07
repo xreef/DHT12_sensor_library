@@ -25,6 +25,8 @@ This is an Arduino and esp8266 library for the DHT12 series of very low cost tem
 
 AI read that sometime seems that need calibration, but I have tree of this and get value very similar to DHT22. If you have calibration this problem, open issue on github and I add implementation.
 
+06/04/2022: v1.0.2 Fix package size
+
 Tutorial: 
 
 To download. click the DOWNLOADS button in the top right corner, rename the uncompressed folder DHT12. Check that the DHT folder contains `DHT12.cpp` and `DHT12.h`. Place the DHT library folder your `<arduinosketchfolder>/libraries/` folder. You may need to create the libraries subfolder if its your first library. Restart the IDE.
